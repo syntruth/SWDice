@@ -110,7 +110,7 @@ static NSDictionary *allDice;
   }
 
   if ([dieString compare: @"UNTRAINED"
-                options:NSCaseInsensitiveSearch] == NSOrderedSame)
+                 options:NSCaseInsensitiveSearch] == NSOrderedSame)
   {
     die = D4;
   }
@@ -158,7 +158,7 @@ static NSDictionary *allDice;
   return [self initWithNumber:1 sides:sides modifier:0];
 }
 
-+ (SWDice) diceWithSides: (NSUInteger)s
++ (SWDice) withSides: (NSUInteger)s
 {
   return [[[SWDice alloc] initWithSides:s] autorelease];
 }
@@ -169,8 +169,8 @@ static NSDictionary *allDice;
   return [self initWithNumber:number sides:sides modifier:0];
 }
 
-+ (SWDice) diceWithNumber: (NSUInteger)n 
-           sides:          (NSUInteger)s
++ (SWDice) withNumber: (NSUInteger)n 
+           sides:      (NSUInteger)s
 {
   return [[[SWDice alloc] initWithNumber:n sides:s] autorelease];
 }
@@ -188,9 +188,9 @@ static NSDictionary *allDice;
   return self;
 }
 
-+ (SWDice) diceWithNumber: (NSUInteger)n
-           sides:          (NSUInteger)s
-           modifier:       (NSInteger)m
++ (SWDice) withNumber: (NSUInteger)n
+           sides:      (NSUInteger)s
+           modifier:   (NSInteger)m
 {
   return [[[SWDice alloc] initWithNumber:n sides:s modifier:m] autorelease];
 }

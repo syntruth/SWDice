@@ -43,9 +43,9 @@ typedef enum kDiceType {
 
 + (SWDice) getDie: (DieType)die;
 + (SWDice) getDieFromString: (NSString *)dieString;
-+ (SWDice) diceWithSides: (NSUInteger)s;
-+ (SWDice) diceWithNumber: (NSUInteger)n sides: (NSUInteger)s;
-+ (SWDice) diceWithNumber: (NSUInteger)n sides: (NSUInteger)s modifier: (NSUInteger)m;
++ (SWDice) withSides: (NSUInteger)s;
++ (SWDice) withNumber: (NSUInteger)n sides: (NSUInteger)s;
++ (SWDice) withNumber: (NSUInteger)n sides: (NSUInteger)s modifier: (NSUInteger)m;
 
 - (id) init;
 - (id) initWithSides (NSUInteger)s;
