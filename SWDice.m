@@ -1,0 +1,231 @@
+/*
+Copyright 2011 Randy Carnahan <syntruth at gmail>
+
+SWDice.m -- Implementation file for the SWDice class.
+
+This software is provided 'as-is', without any express or implied
+warranty.  In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to use this code in personal, non-commercial
+applications, unless permission from me is granted otherwise. Also,this
+code may not be redistributed without permission. The above is subject
+to the follow restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source distribution.
+
+*/
+
+#import "SWDice.h"
+#import "SWRollResult.h"
+
+static NSDictionary *allDice;
+
+@implementation SWDice
+
+@synthesize number;
+@synthesize sides;
+@synthesize staticModifier;
+
++ (SWDice) getDie: (DieType)die
+{
+  /* Build allDice dictionary if it doesn't exist. */
+  if (allDice == nil) {
+    NSArray *valueArray = [NSArray arrayWithObjects:
+      [SWDice diceWithNumber:1 sides:4  modifier:0],
+      [SWDice diceWithNumber:1 sides:6  modifier:0],
+      [SWDice diceWithNumber:1 sides:8  modifier:0],
+      [SWDice diceWithNumber:1 sides:10 modifier:0],
+      [SWDice diceWithNumber:1 sides:12 modifier:0],
+      [SWDice diceWithNumber:1 sides:6  modifier:0],
+      [SWDice diceWithNumber:1 sides:4  modifier:-2],
+      [SWDice diceWithNumber:1 sides:6  modifier:-2],
+      nil];
+
+    NSArray *keyArray = [NSArray arrayWithObjects:
+      [NSNumber numberWithInt:D4],
+      [NSNumber numberWithInt:D6],
+      [NSNumber numberWithInt:D8],
+      [NSNumber numberWithInt:D10],
+      [NSNumber numberWithInt:D12],
+      [NSNumber numberWithInt:WILD_DIE],
+      [NSNumber numberWithInt:UNTRAINED],
+      [NSNumber numberWithInt:UNTRAINED_WILD_DIE],
+      nil];
+
+    allDice = [NSDictionary dictionaryWithObjects:valueArray
+                            forKeys:keyArray];
+  }
+
+  return [allDice valueForKey: [NSNumber numberWithInt:die]];
+}
+
++ getDieFromString: (NSString *)dieString
+{
+  /* XXX -- Default to a d4; change this later? */
+  DieType die = D4;
+
+  if ([dieString compare: @"d4" 
+                 options:NSCaseInsensitiveSearch] == NSOrderedSame)
+  {
+    die = D4;
+  }
+
+  if ([dieString compare: @"d6"
+                 options:NSCaseInsensitiveSearch] == NSOrderedSame)
+  {
+    die = D6;
+  }
+
+  if ([dieString compare: @"d8"
+                 options:NSCaseInsensitiveSearch] == NSOrderedSame)
+  {
+    die = D8;
+  }
+
+  if ([dieString compare: @"d10"
+                 options:NSCaseInsensitiveSearch] == NSOrderedSame)
+  {
+    die = D10;
+  }
+
+  if ([dieString compare: @"d12"
+                 options:NSCaseInsensitiveSearch] == NSOrderedSame)
+  {
+    die = D12;
+  }
+
+  if ([dieString compare: @"WILD_DIE"
+                 options:NSCaseInsensitiveSearch] == NSOrderedSame)
+  {
+    die = WILD_DIE;
+  }
+
+  if ([dieString compare: @"UNTRAINED"
+                options:NSCaseInsensitiveSearch] == NSOrderedSame)
+  {
+    die = D4;
+  }
+
+  if ([dieString compare: @"UNTRAINED_WILD_DIE"
+                 options:NSCaseInsensitiveSearch] == NSOrderedSame)
+  {
+    die = UNTRAINED_WILD_DIE;
+  }
+
+  return [SWDice getDie:die];
+}
+
++ (NSString) getDieAsString: (DieType)die
+{
+  switch(die) {
+  case D4:
+    return @"d4";
+  case D6:
+    return @"d6";
+  case D8:
+    return @"d8";
+  case D10:
+    return @"d10";
+  case D12:
+    return @"d12";
+  case WILD_DIE:
+    return @"d6";
+  case UNTRAINED:
+    return @"d4-2";
+  case UNTRAINED_WILD_DIE:
+    return @"d6-2";
+  default:
+    return @"Unknown Die Type";
+  }
+}
+
+- (id) init
+{
+  return [self initWithNumber:1 sides:6 modifier:0];
+}
+
+- (id) initWithSides: (NSUInteger)s
+{
+  return [self initWithNumber:1 sides:sides modifier:0];
+}
+
++ (SWDice) diceWithSides: (NSUInteger)s
+{
+  return [[[SWDice alloc] initWithSides:s] autorelease];
+}
+
+- (id) initWithNumber: (NSUInteger)n
+       sides:          (NSUInteger)s
+{
+  return [self initWithNumber:number sides:sides modifier:0];
+}
+
++ (SWDice) diceWithNumber: (NSUInteger)n 
+           sides:          (NSUInteger)s
+{
+  return [[[SWDice alloc] initWithNumber:n sides:s] autorelease];
+}
+
+- (id) initWithNumber: (NSUInteger)n
+       sides:          (NSUInteger)s
+       modifier:       (NSInteger)m
+{
+  if (self = [super init]) { 
+    number         = n;
+    sides          = s;
+    staticModifier = m;
+  }
+
+  return self;
+}
+
++ (SWDice) diceWithNumber: (NSUInteger)n
+           sides:          (NSUInteger)s
+           modifier:       (NSInteger)m
+{
+  return [[[SWDice alloc] initWithNumber:n sides:s modifier:m] autorelease];
+}
+
+- (SWRollResult) rollWithModifier:    (int)modifier
+                 againstTargetNumber: (unsigned int)targetNumber
+{
+  NSMutableArray *tally = [[NSMutableArray alloc] init];
+  int i = 0;
+  int t = 0;
+
+  modifier += [self staticModifier];
+
+  for (i = 0; i < [self number]; i++) {
+    t = (arc4random() % [self sides]) + 1;
+    [tally addObject: [NSNumber numberWithInt: t]];
+  }
+
+  SWRollResult *result = [[SWRollResult alloc] initWithTally: tally
+                                               modifier: modifier
+                                               targetNumber: targetNumber];
+
+  [tally release];
+
+  return result;
+}
+
+- (SWRollResult) rollWithModifier: (int) modifier
+{
+  return [self rollWithModifier:modifier againstTargetNumber:4];
+}
+
+- (SWRollResult) roll
+{
+  return [self rollWithModifier:0 againstTargetNumber:4];
+}
+
+@end
