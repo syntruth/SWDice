@@ -1,4 +1,3 @@
-
 /*
 Copyright 2011 Randy Carnahan <syntruth at gmail>
 
@@ -22,7 +21,6 @@ to the follow restrictions:
    misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source distribution.
-
 */
 
 #import "SWDice.h"
