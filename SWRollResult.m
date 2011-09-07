@@ -67,6 +67,11 @@ to the follow restrictions:
   return [self initWithTally:aTally modifier:0 targetNumber:4];
 }
 
+- (bool) success
+{
+  return (self.total >= self.targetNumber) ? true : false;
+}
+
 - (void) process
 {
   for (NSNumber *n in tally) {

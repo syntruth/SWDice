@@ -41,6 +41,7 @@ to the follow restrictions:
 - (id) initWithTally: (NSArray *) aTally modifier: (NSInteger)modifier targetNumber: (unsigned int) tn;
 - (id) initWithTally: (NSArray *) aTally targetNumber: (NSUInteger) tn;
 - (id) initWithTally: (NSArray *) aTally;
+- (bool) success;
 - (void) process;
 
 @end
