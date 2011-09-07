@@ -5,6 +5,9 @@ to an extent, found and fixed a memory leak, and so far, so good.
 
 Example of usage:
 
+    /* Both the die and result objects are autoreleased 
+       with these calls.
+    */
     SWDice       *die    = [SWDice getDie: D8];
     SWRollResult *result = [die roll];
 
