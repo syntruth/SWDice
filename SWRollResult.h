@@ -28,6 +28,7 @@ to the follow restrictions:
   NSArray    * tally;
   NSInteger    modifier;
   NSInteger    total;
+  bool         success;
   NSUInteger   raises;
   NSUInteger   targetNumber;
 }
@@ -35,13 +36,18 @@ to the follow restrictions:
 @property (readonly, retain) NSArray *tally;
 @property NSInteger  modifier;
 @property NSInteger  total;
+@property bool       success;
 @property NSUInteger raises;
 @property NSUInteger targetNumber;
 
-- (id) initWithTally: (NSArray *) aTally modifier: (NSInteger)modifier targetNumber: (unsigned int) tn;
-- (id) initWithTally: (NSArray *) aTally targetNumber: (NSUInteger) tn;
-- (id) initWithTally: (NSArray *) aTally;
-- (bool) success;
+- (id) initWithTally: (NSArray *)aTally modifier: (NSInteger)mod targetNumber: (NSUInteger)tn;
+- (id) initWithTally: (NSArray *)aTally targetNumber: (NSUInteger)tn;
+- (id) initWithTally: (NSArray *)aTally;
+
++ (SWRollResult *) resultWithTally: (NSArray *)aTally modifier: (NSInteger)mod targetNumber: (NSUInteger)tn;
++ (SWRollResult *) resultWithTally: (NSArray *)aTally targetNumber: (NSUInteger)tn;
++ (SWRollResult *) resultWithTally: (NSArray *)aTally;
+
 - (void) process;
 
 @end

@@ -211,13 +211,11 @@ static NSDictionary *allDice;
     [tally addObject: [NSNumber numberWithInt: t]];
   }
 
-  SWRollResult *result = [[SWRollResult alloc] initWithTally: tally
-                                               modifier: mod
-                                               targetNumber: targetNumber];
-
   [tally release];
 
-  return [result autorelease];
+  return [SWRollResult resultWithTally:tally
+                       modifier:mod
+                       targetNumber:targetNumber];
 }
 
 - (SWRollResult *) rollWithModifier: (int) mod

@@ -31,6 +31,7 @@ to the follow restrictions:
 @synthesize tally;
 @synthesize modifier;
 @synthesize total;
+@synthesize success;
 @synthesize raises;
 @synthesize targetNumber;
 
@@ -67,9 +68,28 @@ to the follow restrictions:
   return [self initWithTally:aTally modifier:0 targetNumber:4];
 }
 
-- (bool) success
++ (SWRollResult *) resultWithTally: (NSArray *)aTally 
+                   modifier:        (NSInteger)mod 
+                   targetNumber:    (NSUInteger)tn
 {
-  return (self.total >= self.targetNumber) ? true : false;
+  return [[[SWRollResult alloc] 
+            initWithTally:aTally modifier:mod targetNumber:tn] 
+            autorelease];
+}
+
++ (SWRollResult *) resultWithTally: (NSArray *)aTally 
+                   targetNumber:    (NSUInteger)tn
+{
+  return [[[SWRollResult alloc] 
+            initWithTally:aTally modifier:0 targetNumber:tn] 
+            autorelease];
+}
+
++ (SWRollResult *) resultWithTally: (NSArray *)aTally
+{
+  return [[[SWRollResult alloc] 
+            initWithTally:aTally modifier:0 targetNumber:0] 
+            autorelease];
 }
 
 - (void) process
@@ -79,6 +99,7 @@ to the follow restrictions:
   }
 
   self.total  += self.modifier;
+  self.success = (self.total >= self.targetNumber);
   self.raises  = (self.total - self.targetNumber) / 4;
 }
 
