@@ -9,7 +9,7 @@ Example of usage:
     SWRollResult *result = [die roll];
 
     NSLog(@"The %s die roll was: %d", [SWDice getDieAsString:D8], result.total);
-    NSLog(@"Roll tally: %s", [result.tally componentsJoinedByString:@", ");
+    NSLog(@"Roll tally: %s", [result.tally componentsJoinedByString:@", "]);
 
     if (result.success) {
       NSLog(@"The roll was a success with %d raises.", result.raises);
