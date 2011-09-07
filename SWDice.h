@@ -50,7 +50,7 @@ typedef enum kDiceType {
 + (SWDice *) withNumber: (NSUInteger)n sides: (NSUInteger)s mod: (NSUInteger)m;
 
 - (id) init;
-- (id) initWithSides: (NSUInteger)s;
+- (id) initWithSides:  (NSUInteger)s;
 - (id) initWithNumber: (NSUInteger)n sides: (NSUInteger)s;
 - (id) initWithNumber: (NSUInteger)n sides: (NSUInteger)s mod: (NSInteger)m;
 

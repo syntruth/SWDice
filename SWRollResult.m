@@ -45,7 +45,7 @@ to the follow restrictions:
 
     tally = [aTally retain];
 
-    self.modifier     = modifier;
+    self.modifier     = mod;
     self.targetNumber = tn;
     self.total        = 0;
     self.raises       = 0;
@@ -70,12 +70,11 @@ to the follow restrictions:
 - (void) process
 {
   for (NSNumber *n in tally) {
-    self.total = self.total + [n intValue];
+    self.total += [n intValue];
   }
 
-  self.total  = self.total + self.modifier;
-  self.raises = (self.total - self.targetNumber) / 4;
-
+  self.total  += self.modifier;
+  self.raises  = (self.total - self.targetNumber) / 4;
 }
 
 - (void) dealloc

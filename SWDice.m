@@ -40,14 +40,14 @@ static NSDictionary *allDice;
   /* Build allDice dictionary if it doesn't exist. */
   if (allDice == nil) {
     NSArray *valueArray = [NSArray arrayWithObjects:
-      [SWDice withNumber:1 sides:4  mod:0],
-      [SWDice withNumber:1 sides:6  mod:0],
-      [SWDice withNumber:1 sides:8  mod:0],
-      [SWDice withNumber:1 sides:10 mod:0],
-      [SWDice withNumber:1 sides:12 mod:0],
-      [SWDice withNumber:1 sides:6  mod:0],
-      [SWDice withNumber:1 sides:4  mod:-2],
-      [SWDice withNumber:1 sides:6  mod:-2],
+      [SWDice withSides:4],
+      [SWDice withSides:6],
+      [SWDice withSides:8],
+      [SWDice withSides:10],
+      [SWDice withSides:12],
+      [SWDice withSides:6],
+      [SWDice withNumber:1 sides:4 mod:-2],
+      [SWDice withNumber:1 sides:6 mod:-2],
       nil];
 
     NSArray *keyArray = [NSArray arrayWithObjects:
@@ -138,11 +138,11 @@ static NSDictionary *allDice;
   case D12:
     return @"d12";
   case WILD_DIE:
-    return @"d6";
+    return @"Wild Die";
   case UNTRAINED:
-    return @"d4-2";
+    return @"Untrained";
   case UNTRAINED_WILD_DIE:
-    return @"d6-2";
+    return @"Untrained Wild Die";
   default:
     return @"Unknown Die Type";
   }
@@ -190,37 +190,40 @@ static NSDictionary *allDice;
 
 + (SWDice *) withNumber: (NSUInteger)n
              sides:      (NSUInteger)s
-             mod:   (NSUInteger)m
+             mod:        (NSUInteger)m
 {
   return [[[SWDice alloc] initWithNumber:n sides:s mod:m] autorelease];
 }
 
-- (SWRollResult *) rollWithModifier:    (int)modifier
-                 againstTargetNumber: (unsigned int)targetNumber
+- (SWRollResult *) rollWithModifier:    (int)mod
+                   againstTargetNumber: (unsigned int)targetNumber
 {
   NSMutableArray *tally = [[NSMutableArray alloc] init];
   int i = 0;
   int t = 0;
 
-  modifier += [self staticModifier];
+  mod += self.staticModifier;
 
-  for (i = 0; i < [self number]; i++) {
-    t = (arc4random() % [self sides]) + 1;
+  while (i < self.number) {
+    t = (arc4random() % self.sides) + 1;
+
+    if (t != self.sides) i++;
+
     [tally addObject: [NSNumber numberWithInt: t]];
   }
 
   SWRollResult *result = [[SWRollResult alloc] initWithTally: tally
-                                               modifier: modifier
+                                               modifier: mod
                                                targetNumber: targetNumber];
 
   [tally release];
 
-  return result;
+  return [result autorelease];
 }
 
-- (SWRollResult *) rollWithModifier: (int) modifier
+- (SWRollResult *) rollWithModifier: (int) mod
 {
-  return [self rollWithModifier:modifier againstTargetNumber:4];
+  return [self rollWithModifier:mod againstTargetNumber:4];
 }
 
 - (SWRollResult *) roll
