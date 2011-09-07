@@ -33,8 +33,8 @@ to the follow restrictions:
 }
 
 @property (readonly, retain) NSArray *tally;
-@property NSInteger modifier;
-@property NSInteger total;
+@property NSInteger  modifier;
+@property NSInteger  total;
 @property NSUInteger raises;
 @property NSUInteger targetNumber;
 
