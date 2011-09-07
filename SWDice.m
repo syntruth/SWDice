@@ -211,7 +211,9 @@ static NSDictionary *allDice;
     [tally addObject: [NSNumber numberWithInt: t]];
   }
 
-  SWRollResult *result = [SWRollResult resultWithTally:tally
+  NSArray *reversed = [[tally reverseObjectEnumerator] allObjects];
+
+  SWRollResult *result = [SWRollResult resultWithTally:reversed
                                        modifier:mod
                                        targetNumber:targetNumber];
   [tally release];
