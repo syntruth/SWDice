@@ -11,5 +11,12 @@ Example of usage:
     NSLog(@"The %s die roll was: %d", [SWDice getDieAsString:D8], result.total);
     NSLog(@"Roll tally: %s", [result.tally componentsJoinedByString:@", ");
 
+    if (result.success) {
+      NSLog(@"The roll was a success with %d raises.", result.raises);
+    }
+    else {
+      NSLog(@"The roll failed.");
+    }
+
 
 Read the license before using! Thanks.
