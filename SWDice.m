@@ -35,37 +35,37 @@ static NSDictionary *allDice;
 @synthesize sides;
 @synthesize staticModifier;
 
-+ (SWDice) getDie: (DieType)die
++ (SWDice *) getDie: (DieType)die
 {
   /* Build allDice dictionary if it doesn't exist. */
   if (allDice == nil) {
     NSArray *valueArray = [NSArray arrayWithObjects:
-      [SWDice diceWithNumber:1 sides:4  modifier:0],
-      [SWDice diceWithNumber:1 sides:6  modifier:0],
-      [SWDice diceWithNumber:1 sides:8  modifier:0],
-      [SWDice diceWithNumber:1 sides:10 modifier:0],
-      [SWDice diceWithNumber:1 sides:12 modifier:0],
-      [SWDice diceWithNumber:1 sides:6  modifier:0],
-      [SWDice diceWithNumber:1 sides:4  modifier:-2],
-      [SWDice diceWithNumber:1 sides:6  modifier:-2],
+      [SWDice withNumber:1 sides:4  mod:0],
+      [SWDice withNumber:1 sides:6  mod:0],
+      [SWDice withNumber:1 sides:8  mod:0],
+      [SWDice withNumber:1 sides:10 mod:0],
+      [SWDice withNumber:1 sides:12 mod:0],
+      [SWDice withNumber:1 sides:6  mod:0],
+      [SWDice withNumber:1 sides:4  mod:-2],
+      [SWDice withNumber:1 sides:6  mod:-2],
       nil];
 
     NSArray *keyArray = [NSArray arrayWithObjects:
-      [NSNumber numberWithInt:D4],
-      [NSNumber numberWithInt:D6],
-      [NSNumber numberWithInt:D8],
-      [NSNumber numberWithInt:D10],
-      [NSNumber numberWithInt:D12],
-      [NSNumber numberWithInt:WILD_DIE],
-      [NSNumber numberWithInt:UNTRAINED],
-      [NSNumber numberWithInt:UNTRAINED_WILD_DIE],
+      [NSString stringWithFormat:@"%d", D4],
+      [NSString stringWithFormat:@"%d", D6],
+      [NSString stringWithFormat:@"%d", D8],
+      [NSString stringWithFormat:@"%d", D10],
+      [NSString stringWithFormat:@"%d", D12],
+      [NSString stringWithFormat:@"%d", WILD_DIE],
+      [NSString stringWithFormat:@"%d", UNTRAINED],
+      [NSString stringWithFormat:@"%d", UNTRAINED_WILD_DIE],
       nil];
 
     allDice = [NSDictionary dictionaryWithObjects:valueArray
                             forKeys:keyArray];
   }
 
-  return [allDice valueForKey: [NSNumber numberWithInt:die]];
+  return [allDice valueForKey: [NSString stringWithFormat:@"%d", die]];
 }
 
 + getDieFromString: (NSString *)dieString
@@ -124,7 +124,7 @@ static NSDictionary *allDice;
   return [SWDice getDie:die];
 }
 
-+ (NSString) getDieAsString: (DieType)die
++ (NSString *) getDieAsString: (DieType)die
 {
   switch(die) {
   case D4:
@@ -150,15 +150,15 @@ static NSDictionary *allDice;
 
 - (id) init
 {
-  return [self initWithNumber:1 sides:6 modifier:0];
+  return [self initWithNumber:1 sides:6 mod:0];
 }
 
 - (id) initWithSides: (NSUInteger)s
 {
-  return [self initWithNumber:1 sides:sides modifier:0];
+  return [self initWithNumber:1 sides:sides mod:0];
 }
 
-+ (SWDice) withSides: (NSUInteger)s
++ (SWDice *) withSides: (NSUInteger)s
 {
   return [[[SWDice alloc] initWithSides:s] autorelease];
 }
@@ -166,18 +166,18 @@ static NSDictionary *allDice;
 - (id) initWithNumber: (NSUInteger)n
        sides:          (NSUInteger)s
 {
-  return [self initWithNumber:number sides:sides modifier:0];
+  return [self initWithNumber:number sides:sides mod:0];
 }
 
-+ (SWDice) withNumber: (NSUInteger)n 
-           sides:      (NSUInteger)s
++ (SWDice *) withNumber: (NSUInteger)n 
+             sides:      (NSUInteger)s
 {
   return [[[SWDice alloc] initWithNumber:n sides:s] autorelease];
 }
 
 - (id) initWithNumber: (NSUInteger)n
        sides:          (NSUInteger)s
-       modifier:       (NSInteger)m
+       mod:            (NSInteger)m
 {
   if (self = [super init]) { 
     number         = n;
@@ -188,14 +188,14 @@ static NSDictionary *allDice;
   return self;
 }
 
-+ (SWDice) withNumber: (NSUInteger)n
-           sides:      (NSUInteger)s
-           modifier:   (NSInteger)m
++ (SWDice *) withNumber: (NSUInteger)n
+             sides:      (NSUInteger)s
+             mod:   (NSUInteger)m
 {
-  return [[[SWDice alloc] initWithNumber:n sides:s modifier:m] autorelease];
+  return [[[SWDice alloc] initWithNumber:n sides:s mod:m] autorelease];
 }
 
-- (SWRollResult) rollWithModifier:    (int)modifier
+- (SWRollResult *) rollWithModifier:    (int)modifier
                  againstTargetNumber: (unsigned int)targetNumber
 {
   NSMutableArray *tally = [[NSMutableArray alloc] init];
@@ -218,12 +218,12 @@ static NSDictionary *allDice;
   return result;
 }
 
-- (SWRollResult) rollWithModifier: (int) modifier
+- (SWRollResult *) rollWithModifier: (int) modifier
 {
   return [self rollWithModifier:modifier againstTargetNumber:4];
 }
 
-- (SWRollResult) roll
+- (SWRollResult *) roll
 {
   return [self rollWithModifier:0 againstTargetNumber:4];
 }

@@ -24,6 +24,8 @@ to the follow restrictions:
 
 */
 
+#import "SWRollResult.h"
+
 typedef enum kDiceType { 
   D4, D6, D8, D10, D12, 
   WILD_DIE, UNTRAINED, UNTRAINED_WILD_DIE 
@@ -39,21 +41,21 @@ typedef enum kDiceType {
 @property (readonly) NSUInteger sides;
 @property (readonly) NSUInteger staticModifier;
 
-+ (NSString) getDieAsString: (DieType)die;
++ (NSString *) getDieAsString: (DieType)die;
 
-+ (SWDice) getDie: (DieType)die;
-+ (SWDice) getDieFromString: (NSString *)dieString;
-+ (SWDice) withSides: (NSUInteger)s;
-+ (SWDice) withNumber: (NSUInteger)n sides: (NSUInteger)s;
-+ (SWDice) withNumber: (NSUInteger)n sides: (NSUInteger)s modifier: (NSUInteger)m;
++ (SWDice *) getDie: (DieType)die;
++ (SWDice *) getDieFromString: (NSString *)dieString;
++ (SWDice *) withSides: (NSUInteger)s;
++ (SWDice *) withNumber: (NSUInteger)n sides: (NSUInteger)s;
++ (SWDice *) withNumber: (NSUInteger)n sides: (NSUInteger)s mod: (NSUInteger)m;
 
 - (id) init;
-- (id) initWithSides (NSUInteger)s;
+- (id) initWithSides: (NSUInteger)s;
 - (id) initWithNumber: (NSUInteger)n sides: (NSUInteger)s;
-- (id) initWithNumber: (NSUInteger)n sides: (NSUInteger)s modifier: (NSUInteger)m;
+- (id) initWithNumber: (NSUInteger)n sides: (NSUInteger)s mod: (NSInteger)m;
 
-- (SWRollResult) rollWithModifier: (int) modifier againstTargetNumber: (unsigned in) targetNumber;
-- (SWRollResult) rollWithModifier: (int) modifier;
-- (SWRollResult) roll;
+- (SWRollResult *) rollWithModifier: (int) mod againstTargetNumber: (unsigned int) targetNumber;
+- (SWRollResult *) rollWithModifier: (int) mod;
+- (SWRollResult *) roll;
 
 @end

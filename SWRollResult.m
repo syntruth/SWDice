@@ -35,8 +35,8 @@ to the follow restrictions:
 @synthesize targetNumber;
 
 - (id) initWithTally: (NSArray *)  aTally
-       modifier:      (NSInteger)  modifier
-       targetNumber:  (NSUInteger) targetNumber
+       modifier:      (NSInteger)  mod
+       targetNumber:  (NSUInteger) tn
 {
   if (self = [super init]) {
     if (tally != nil) {
@@ -46,7 +46,7 @@ to the follow restrictions:
     tally = [aTally retain];
 
     self.modifier     = modifier;
-    self.targetNumber = targetNumber;
+    self.targetNumber = tn;
     self.total        = 0;
     self.raises       = 0;
 
@@ -57,9 +57,9 @@ to the follow restrictions:
 }
 
 - (id) initWithTally: (NSArray *)  aTally 
-       targetNumber:  (NSUInteger) targetNumber
+       targetNumber:  (NSUInteger) tn
 {
-  return [self initWithTally:aTally modifier:0 targetNumber:targetNumber];
+  return [self initWithTally:aTally modifier:0 targetNumber:tn];
 }
 
 - (id) initWithTally: (NSArray *) aTally

@@ -32,14 +32,14 @@ to the follow restrictions:
   NSUInteger   targetNumber;
 }
 
-@property (readonly, retain) (NSArray *) tally;
+@property (readonly, retain) NSArray *tally;
 @property NSInteger modifier;
 @property NSInteger total;
 @property NSUInteger raises;
 @property NSUInteger targetNumber;
 
-- (id) initWithTally: (NSArray *) aTally modifier: (NSInteger)modifier targetNumber: (unsigned int) targetNumber;
-- (id) initWithTally: (NSArray *) aTally targetNumber: (NSUInteger) targetNumber;
+- (id) initWithTally: (NSArray *) aTally modifier: (NSInteger)modifier targetNumber: (unsigned int) tn;
+- (id) initWithTally: (NSArray *) aTally targetNumber: (NSUInteger) tn;
 - (id) initWithTally: (NSArray *) aTally;
 - (void) process;
 
