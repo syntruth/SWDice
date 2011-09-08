@@ -35,9 +35,9 @@ to the follow restrictions:
 @synthesize raises;
 @synthesize targetNumber;
 
-- (id) initWithTally: (NSArray *)  aTally
-       modifier:      (NSInteger)  mod
-       targetNumber:  (NSUInteger) tn
+- (id) initWithTally:(NSArray *)  aTally
+            modifier:(NSInteger)  mod
+        targetNumber:(NSUInteger) tn
 {
   if (self = [super init]) {
     if (tally != nil) {
@@ -57,39 +57,39 @@ to the follow restrictions:
   return self;
 }
 
-- (id) initWithTally: (NSArray *)  aTally 
-       targetNumber:  (NSUInteger) tn
+- (id) initWithTally:(NSArray *)  aTally 
+        targetNumber:(NSUInteger) tn
 {
   return [self initWithTally:aTally modifier:0 targetNumber:tn];
 }
 
-- (id) initWithTally: (NSArray *) aTally
+- (id) initWithTally:(NSArray *) aTally
 {
   return [self initWithTally:aTally modifier:0 targetNumber:4];
 }
 
-+ (SWRollResult *) resultWithTally: (NSArray *)aTally 
-                   modifier:        (NSInteger)mod 
-                   targetNumber:    (NSUInteger)tn
++ (SWRollResult *) resultWithTally:(NSArray *)  aTally 
+                          modifier:(NSInteger)  mod 
+                      targetNumber:(NSUInteger) tn
 {
-  return [[[SWRollResult alloc] 
-            initWithTally:aTally modifier:mod targetNumber:tn] 
-            autorelease];
+  return [[[SWRollResult alloc] initWithTally:aTally
+                                     modifier:mod
+                                 targetNumber:tn] autorelease];
 }
 
-+ (SWRollResult *) resultWithTally: (NSArray *)aTally 
-                   targetNumber:    (NSUInteger)tn
++ (SWRollResult *) resultWithTally:(NSArray *)  aTally 
+                      targetNumber:(NSUInteger) tn
 {
-  return [[[SWRollResult alloc] 
-            initWithTally:aTally modifier:0 targetNumber:tn] 
-            autorelease];
+  return [[[SWRollResult alloc] initWithTally:aTally 
+                                     modifier:0
+                                 targetNumber:tn] autorelease];
 }
 
 + (SWRollResult *) resultWithTally: (NSArray *)aTally
 {
-  return [[[SWRollResult alloc] 
-            initWithTally:aTally modifier:0 targetNumber:0] 
-            autorelease];
+  return [[[SWRollResult alloc] initWithTally:aTally
+                                     modifier:0
+                                 targetNumber:0] autorelease];
 }
 
 - (void) process

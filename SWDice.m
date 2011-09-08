@@ -26,6 +26,10 @@ to the follow restrictions:
 #import "SWDice.h"
 #import "SWRollResult.h"
 
+/* The dictionary to hold all of the standard Savage Worlds
+   dice objects. This is so we don't have to create new objects
+   everytime we need a standard die roll.
+*/
 static NSDictionary *allDice;
 
 @implementation SWDice
@@ -34,7 +38,36 @@ static NSDictionary *allDice;
 @synthesize sides;
 @synthesize staticModifier;
 
-+ (SWDice *) getDie: (DieType)die
+- (id) initWithNumber:(NSUInteger)n
+                sides:(NSUInteger)s
+                  mod:(NSInteger)m
+{
+  if (self = [super init]) { 
+    number         = n;
+    sides          = s;
+    staticModifier = m;
+  }
+
+  return self;
+}
+
+- (id) initWithNumber:(NSUInteger)n 
+                sides:(NSUInteger)s
+{
+  return [self initWithNumber:n sides:s mod:0];
+}
+
+- (id) initWithSides:(NSUInteger)s
+{
+  return [self initWithNumber:1 sides:s mod:0];
+}
+
+- (id) init
+{
+  return [self initWithNumber:1 sides:6 mod:0];
+}
+
++ (SWDice *) getDie:(DieType)die
 {
   /* Build allDice dictionary if it doesn't exist. */
   if (allDice == nil) {
@@ -61,13 +94,13 @@ static NSDictionary *allDice;
       nil];
 
     allDice = [NSDictionary dictionaryWithObjects:valueArray
-                            forKeys:keyArray];
+                                          forKeys:keyArray];
   }
 
-  return [allDice valueForKey: [NSString stringWithFormat:@"%d", die]];
+  return [allDice valueForKey:[NSString stringWithFormat:@"%d", die]];
 }
 
-+ getDieFromString: (NSString *)dieString
++ getDieFromString:(NSString *)dieString
 {
   /* XXX -- Default to a d4; change this later? */
   DieType die = D4;
@@ -123,7 +156,7 @@ static NSDictionary *allDice;
   return [SWDice getDie:die];
 }
 
-+ (NSString *) getDieAsString: (DieType)die
++ (NSString *) getDieAsString:(DieType)die
 {
   switch(die) {
   case D4:
@@ -147,55 +180,26 @@ static NSDictionary *allDice;
   }
 }
 
-- (id) init
-{
-  return [self initWithNumber:1 sides:6 mod:0];
-}
-
-- (id) initWithSides: (NSUInteger)s
-{
-  return [self initWithNumber:1 sides:s mod:0];
-}
-
-+ (SWDice *) withSides: (NSUInteger)s
-{
-  return [[[SWDice alloc] initWithSides:s] autorelease];
-}
-
-- (id) initWithNumber: (NSUInteger)n
-       sides:          (NSUInteger)s
-{
-  return [self initWithNumber:n sides:s mod:0];
-}
-
-+ (SWDice *) withNumber: (NSUInteger)n 
-             sides:      (NSUInteger)s
-{
-  return [[[SWDice alloc] initWithNumber:n sides:s] autorelease];
-}
-
-- (id) initWithNumber: (NSUInteger)n
-       sides:          (NSUInteger)s
-       mod:            (NSInteger)m
-{
-  if (self = [super init]) { 
-    number         = n;
-    sides          = s;
-    staticModifier = m;
-  }
-
-  return self;
-}
-
-+ (SWDice *) withNumber: (NSUInteger)n
-             sides:      (NSUInteger)s
-             mod:        (NSUInteger)m
++ (SWDice *) withNumber:(NSUInteger)n
+                  sides:(NSUInteger)s
+                    mod:(NSUInteger)m
 {
   return [[[SWDice alloc] initWithNumber:n sides:s mod:m] autorelease];
 }
 
-- (SWRollResult *) rollWithModifier:    (NSInteger)mod
-                   againstTargetNumber: (NSUInteger)targetNumber
++ (SWDice *) withNumber:(NSUInteger)n 
+                  sides:(NSUInteger)s
+{
+  return [[[SWDice alloc] initWithNumber:n sides:s] autorelease];
+}
+
++ (SWDice *) withSides:(NSUInteger)s
+{
+  return [[[SWDice alloc] initWithSides:s] autorelease];
+}
+
+- (SWRollResult *) rollWithModifier:(NSInteger)mod
+                againstTargetNumber:(NSUInteger)targetNumber
 {
   NSMutableArray *tally = [[NSMutableArray alloc] init];
   int i = 0;
@@ -218,19 +222,19 @@ static NSDictionary *allDice;
   NSArray *sorted = [[tally reverseObjectEnumerator] allObjects];            
 
   SWRollResult *result = [SWRollResult resultWithTally:sorted
-                                       modifier:mod
-                                       targetNumber:targetNumber];
+                                              modifier:mod
+                                          targetNumber:targetNumber];
   [tally release];
 
   return result;
 }
 
-- (SWRollResult *) rollWithModifier: (NSInteger) mod
+- (SWRollResult *) rollWithModifier:(NSInteger)mod
 {
   return [self rollWithModifier:mod againstTargetNumber:4];
 }
 
-- (SWRollResult *) rollAgainstTargetNumber: (NSUInteger)targetNumber
+- (SWRollResult *) rollAgainstTargetNumber:(NSUInteger)targetNumber
 {
   return [self rollWithModifier:0 againstTargetNumber:targetNumber];
 }

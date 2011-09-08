@@ -25,12 +25,12 @@ to the follow restrictions:
 */
 
 @interface SWRollResult : NSObject {
-  NSArray    * tally;
-  NSInteger    modifier;
-  NSInteger    total;
-  bool         success;
-  NSUInteger   raises;
-  NSUInteger   targetNumber;
+  NSArray    *tally;
+  NSInteger   modifier;
+  NSInteger   total;
+  bool        success;
+  NSUInteger  raises;
+  NSUInteger  targetNumber;
 }
 
 @property (readonly, retain) NSArray *tally;
@@ -40,15 +40,45 @@ to the follow restrictions:
 @property NSUInteger raises;
 @property NSUInteger targetNumber;
 
-- (id) initWithTally: (NSArray *)aTally modifier: (NSInteger)mod targetNumber: (NSUInteger)tn;
-- (id) initWithTally: (NSArray *)aTally targetNumber: (NSUInteger)tn;
-- (id) initWithTally: (NSArray *)aTally;
+/* Designated initializer. 
+   aTally will be retained.
+*/
+- (id) initWithTally:(NSArray *)aTally 
+            modifier:(NSInteger)mod 
+        targetNumber:(NSUInteger)tn;
 
-+ (SWRollResult *) resultWithTally: (NSArray *)aTally modifier: (NSInteger)mod targetNumber: (NSUInteger)tn;
-+ (SWRollResult *) resultWithTally: (NSArray *)aTally targetNumber: (NSUInteger)tn;
-+ (SWRollResult *) resultWithTally: (NSArray *)aTally;
+/* Wrapper for -initWithTally:modifier:targetNumber: defaulting
+   modifier to 0.
+*/
+- (id) initWithTally:(NSArray *)aTally
+        targetNumber: (NSUInteger)tn;
 
+/* Wrapper for -initWithTally:modifier:targetNumber: defaulting
+   modifier and tn to 0.
+*/
+- (id) initWithTally:(NSArray *)aTally;
+
+/* The following three methods returns an autoreleased instance 
+   of SWRollResult. See -initWithTally:modifier:targetNumber: 
+   for details.
+*/
++ (SWRollResult *) resultWithTally:(NSArray *)aTally
+                          modifier:(NSInteger)mod
+                      targetNumber: (NSUInteger)tn;
+
++ (SWRollResult *) resultWithTally:(NSArray *)aTally
+                      targetNumber: (NSUInteger)tn;
+
++ (SWRollResult *) resultWithTally:(NSArray *)aTally;
+
+/* Called from the initializer to set properties based on the values
+   of the tally and target number.
+*/
 - (void) process;
 
+/* Returns a string of the tally, joined by commas.
+   i.e.: 4, 3, 2
+*/
 - (NSString *) tallyAsString;
+
 @end
