@@ -239,7 +239,7 @@ static NSDictionary *allDice;
 {
   NSMutableString *die = [[[NSMutableString alloc] init] autorelease];
 
-  if (self.number > 0) {
+  if (self.number > 1) {
     [die appendFormat:@"%d", self.number];
   }
 
