@@ -165,7 +165,7 @@ static NSDictionary *allDice;
 - (id) initWithNumber: (NSUInteger)n
        sides:          (NSUInteger)s
 {
-  return [self initWithNumber:number sides:sides mod:0];
+  return [self initWithNumber:n sides:s mod:0];
 }
 
 + (SWDice *) withNumber: (NSUInteger)n 
