@@ -11,8 +11,8 @@ Example of usage:
     SWDice       *die    = [SWDice getDie: D8];
     SWRollResult *result = [die roll];
 
-    NSLog(@"The %s die roll was: %d", [SWDice getDieAsString:D8], result.total);
-    NSLog(@"Roll tally: %s", [result.tally componentsJoinedByString:@", "]);
+    NSLog(@"The %@ die roll was: %d", [SWDice getDieAsString:D8], result.total);
+    NSLog(@"Roll tally: %@", [result.tally componentsJoinedByString:@", "]);
 
     if (result.success) {
       NSLog(@"The roll was a success with %d raises.", result.raises);
