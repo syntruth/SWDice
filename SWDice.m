@@ -211,13 +211,11 @@ static NSDictionary *allDice;
     [tally addObject: [NSNumber numberWithInt: t]];
   }
 
-  NSArray *sorted = [tally sortedArrayUsingComparator:^(id obj1, id obj2) {
-    if (obj1 > obj2) { return NSOrderedAscending; }
-    if (obj1 < obj2) { return NSOrderedDescending; }
+  [tally sortUsingComparator:^(id num1, id num2) {
+    return [num1 compare:num2];
+   }];
 
-    return NSOrderedSame;
-    }
-  ];
+  NSArray *sorted = [[tally reverseObjectEnumerator] allObjects];            
 
   SWRollResult *result = [SWRollResult resultWithTally:sorted
                                        modifier:mod
