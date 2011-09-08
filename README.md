@@ -9,10 +9,11 @@ Example of usage:
        with these calls.
     */
     SWDice       *die    = [SWDice getDie: D8];
+    SWDice       *custom = [SWDice withNumber:3 sides:4 mod:-2];
     SWRollResult *result = [die roll];
 
     NSLog(@"The %@ die roll was: %d", [SWDice getDieAsString:D8], result.total);
-    NSLog(@"Roll tally: %@", [result.tally componentsJoinedByString:@", "]);
+    NSLog(@"Roll tally: %@", [result.tally tallyAsString]);
 
     if (result.success) {
       NSLog(@"The roll was a success with %d raises.", result.raises);
@@ -21,5 +22,9 @@ Example of usage:
       NSLog(@"The roll failed.");
     }
 
+    result = [custom roll];
+
+    NSLog(@"The %@ die roll was: %d", [custom dieString], result.total);
+    NSLog(@"Roll tally: %@", [result.tally tallyAsString]);
 
 Read the license before using! Thanks.

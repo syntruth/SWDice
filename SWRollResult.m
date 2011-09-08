@@ -103,6 +103,11 @@ to the follow restrictions:
   self.raises  = (self.total - self.targetNumber) / 4;
 }
 
+- (NSString *) tallyAsString
+{
+  return [tally componentsJoinedByString:@", "]
+}
+
 - (void) dealloc
 {
   [tally release];

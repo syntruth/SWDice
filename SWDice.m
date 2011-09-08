@@ -235,4 +235,24 @@ static NSDictionary *allDice;
   return [self rollWithModifier:0 againstTargetNumber:4];
 }
 
+- (NSString *) dieString
+{
+  NSMutableString *die = [[[NSMutableString alloc] init] autorelease];
+
+  if (self.number > 0) {
+    [die appendFormat:@"%d", self.number];
+  }
+
+  [die appendFormat:@"d%d", self.sides];
+
+  if (self.staticModifier >= 1) {
+    [die appendFormat:@"+%d", self.staticModifier];
+  }
+  else if (self.staticModifier < 0) {
+    [die appendFormat:@"%d", self.staticModifier];
+  }
+
+  return die;
+}
+
 @end

@@ -58,4 +58,6 @@ typedef enum kDiceType {
 - (SWRollResult *) rollWithModifier: (int) mod;
 - (SWRollResult *) roll;
 
+- (NSString *) dieString;
+
 @end

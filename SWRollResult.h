@@ -50,4 +50,5 @@ to the follow restrictions:
 
 - (void) process;
 
+- (NSString *) tallyAsString;
 @end
