@@ -1,35 +1,32 @@
-/*
-Copyright 2011 Randy Carnahan <syntruth at gmail>
-
-SWDice.m -- Implementation file for the SWDice class.
-
-This software is provided 'as-is', without any express or implied
-warranty.  In no event will the authors be held liable for any damages
-arising from the use of this software.
-
-Permission is granted to use this code in personal, non-commercial
-applications, unless permission from me is granted otherwise. Also,this
-code may not be redistributed without permission. The above is subject
-to the follow restrictions:
-
-1. The origin of this software must not be misrepresented; you must not
-   claim that you wrote the original software. If you use this software
-   in a product, an acknowledgment in the product documentation would be
-   appreciated but is not required.
-
-2. Altered source versions must be plainly marked as such, and must not be
-   misrepresented as being the original software.
-
-3. This notice may not be removed or altered from any source distribution.
-*/
+// Copyright 2011 Randy Carnahan <syntruth at gmail>
+//
+// SWDice.m -- Implementation file for the SWDice class.
+//
+// This software is provided 'as-is', without any express or implied
+// warranty.  In no event will the authors be held liable for any damages
+// arising from the use of this software.
+//
+// Permission is granted to use this code in personal, non-commercial
+// applications, unless permission from me is granted otherwise. Also,this
+// code may not be redistributed without permission. The above is subject
+// to the follow restrictions:
+//
+// 1. The origin of this software must not be misrepresented; you must not
+//    claim that you wrote the original software. If you use this software
+//    in a product, an acknowledgment in the product documentation would be
+//    appreciated but is not required.
+//
+// 2. Altered source versions must be plainly marked as such, and must not be
+//    misrepresented as being the original software.
+//
+// 3. This notice may not be removed or altered from any source distribution.
 
 #import "SWDice.h"
 #import "SWRollResult.h"
 
-/* The dictionary to hold all of the standard Savage Worlds
-   dice objects. This is so we don't have to create new objects
-   everytime we need a standard die roll.
-*/
+// The dictionary to hold all of the standard Savage Worlds
+// dice objects. This is so we don't have to create new objects
+// everytime we need a standard die roll.
 static NSDictionary *allDice;
 
 @implementation SWDice
@@ -69,7 +66,7 @@ static NSDictionary *allDice;
 
 + (SWDice *) getDie:(DieType)die
 {
-  /* Build allDice dictionary if it doesn't exist. */
+  // Build allDice dictionary if it doesn't exist.
   if (allDice == nil) {
     NSArray *valueArray = [NSArray arrayWithObjects:
       [SWDice withSides:4],
@@ -102,7 +99,7 @@ static NSDictionary *allDice;
 
 + getDieFromString:(NSString *)dieString
 {
-  /* XXX -- Default to a d4; change this later? */
+  // XXX -- Default to a d4; change this later?
   DieType die = D4;
 
   if ([dieString compare: @"d4" 
@@ -214,14 +211,18 @@ static NSDictionary *allDice;
 
     [tally addObject: [NSNumber numberWithInt: t]];
   }
-
+  
+  // Sort the tally from lowest to highest...
   [tally sortUsingComparator:^(id num1, id num2) {
     return [num1 compare:num2];
    }];
 
-  NSArray *sorted = [[tally reverseObjectEnumerator] allObjects];            
+  // ...then reverse it.
+  NSArray *reversed = [[tally reverseObjectEnumerator] allObjects];            
 
-  SWRollResult *result = [SWRollResult resultWithTally:sorted
+  // Create the SWRollResult object, calling the autoreleased
+  // creation method.
+  SWRollResult *result = [SWRollResult resultWithTally:reversed
                                               modifier:mod
                                           targetNumber:targetNumber];
   [tally release];
