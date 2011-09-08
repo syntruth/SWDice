@@ -54,8 +54,9 @@ typedef enum kDiceType {
 - (id) initWithNumber: (NSUInteger)n sides: (NSUInteger)s;
 - (id) initWithNumber: (NSUInteger)n sides: (NSUInteger)s mod: (NSInteger)m;
 
-- (SWRollResult *) rollWithModifier: (int) mod againstTargetNumber: (unsigned int) targetNumber;
+- (SWRollResult *) rollWithModifier: (NSInteger) mod againstTargetNumber: (NSUInteger) targetNumber;
 - (SWRollResult *) rollWithModifier: (int) mod;
+- (SWRollResult *) rollAgainstTargetNumber: (NSUInteger)targetNumber;
 - (SWRollResult *) roll;
 
 - (NSString *) dieString;

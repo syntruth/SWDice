@@ -194,8 +194,8 @@ static NSDictionary *allDice;
   return [[[SWDice alloc] initWithNumber:n sides:s mod:m] autorelease];
 }
 
-- (SWRollResult *) rollWithModifier:    (int)mod
-                   againstTargetNumber: (unsigned int)targetNumber
+- (SWRollResult *) rollWithModifier:    (NSInteger)mod
+                   againstTargetNumber: (NSUInteger)targetNumber
 {
   NSMutableArray *tally = [[NSMutableArray alloc] init];
   int i = 0;
@@ -225,9 +225,14 @@ static NSDictionary *allDice;
   return result;
 }
 
-- (SWRollResult *) rollWithModifier: (int) mod
+- (SWRollResult *) rollWithModifier: (NSInteger) mod
 {
   return [self rollWithModifier:mod againstTargetNumber:4];
+}
+
+- (SWRollResult *) rollAgainstTargetNumber: (NSUInteger)targetNumber
+{
+  return [self rollWithModifier:0 againstTargetNumber:targetNumber];
 }
 
 - (SWRollResult *) roll
