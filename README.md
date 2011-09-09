@@ -5,11 +5,11 @@ to an extent, found and fixed a memory leak, and so far, so good.
 
 Example of usage:
 
-    /* Both the die and result objects are autoreleased 
-       with these calls.
-    */
-    SWDice       *die    = [SWDice getDie: D8];
-    SWDice       *custom = [SWDice withNumber:3 sides:4 mod:-2];
+    // Both the die and result objects are autoreleased 
+    // with these calls.
+    SWDice *die    = [SWDice getDie: D8];
+    SWDice *custom = [SWDice withNumber:3 sides:4 mod:-2];
+
     SWRollResult *result = [die roll];
 
     NSLog(@"The %@ die roll was: %d", [SWDice getDieAsString:D8], result.total);
