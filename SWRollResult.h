@@ -63,10 +63,6 @@
 
 + (SWRollResult *) resultWithTally:(NSArray *)aTally;
 
-// Called from the initializer to set properties based on the values
-// of the tally and target number.
-- (void) process;
-
 // Returns a string of the tally, joined by commas. i.e.: 4, 3, 2
 - (NSString *) tallyAsString;
 

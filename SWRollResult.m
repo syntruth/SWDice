@@ -53,10 +53,14 @@
 
     self.modifier     = mod;
     self.targetNumber = tn;
-    self.total        = 0;
-    self.raises       = 0;
 
-    [self process];
+    for (NSNumber *n in tally) {
+      self.total += [n intValue];
+    }
+
+    self.total  += self.modifier;
+    self.success = (self.total >= self.targetNumber);
+    self.raises  = (self.total - self.targetNumber) / 4;
   }
 
   return self;
@@ -95,17 +99,6 @@
   return [[[SWRollResult alloc] initWithTally:aTally
                                      modifier:0
                                  targetNumber:0] autorelease];
-}
-
-- (void) process
-{
-  for (NSNumber *n in tally) {
-    self.total += [n intValue];
-  }
-
-  self.total  += self.modifier;
-  self.success = (self.total >= self.targetNumber);
-  self.raises  = (self.total - self.targetNumber) / 4;
 }
 
 - (NSString *) tallyAsString

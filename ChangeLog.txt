@@ -1,4 +1,7 @@
 2011-09-09
+* Moved the body of SWRollResult -process into the default initializer
+  since it seemed silly to have a separate method for it that is only
+  ever called once.
 * Changed SWDice -dieString to -asString.
 
 2011-09-08
