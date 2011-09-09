@@ -51,7 +51,7 @@ typedef enum {
 - (id) initWithNumber:(NSUInteger)num sides:(NSUInteger)sides;
 
 // Calls the designated initalize with a |num| and |mod| set to 0.
-- (id) initWithSides:(NSUInteger)s;
+- (id) initWithSides:(NSUInteger)sides;
 
 // NSObject init override; calls -initWithNumber:sides:mod: with
 // the followind default values: 1, 6, 0, respectively.
@@ -105,8 +105,6 @@ typedef enum {
 // Returns a string that represents a custom SWDice object, in the standard
 // dice format of xdx[+/-x], thus a SWDice object created for three 4-sided
 // dice with a modifier of -2 would return "3d4-2".
-// It is because of this method that number and sides must NEVER be unsigned
-// integer values, or else you will not get a correct string.
 - (NSString *) asString;
 
 @end
