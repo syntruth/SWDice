@@ -32,13 +32,21 @@
 @synthesize raises;
 @synthesize targetNumber;
 
+- (void) dealloc
+{
+  [tally release];
+  tally = nil;
+
+  [super dealloc];
+}
+
 - (id) initWithTally:(NSArray *)  aTally
             modifier:(NSInteger)  mod
         targetNumber:(NSUInteger) tn
 {
   if (self = [super init]) {
     if (tally != nil) {
-      [tally release];
+      [tally autorelease];
     }
 
     tally = [aTally retain];
@@ -105,11 +113,4 @@
   return [tally componentsJoinedByString:@", "]
 }
 
-- (void) dealloc
-{
-  [tally release];
-  tally = nil;
-
-  [super dealloc];
-}
 @end

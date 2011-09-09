@@ -37,18 +37,18 @@
 @property NSUInteger raises;
 @property NSUInteger targetNumber;
 
-// Designated initializer. aTally will be retained.
+// Designated initializer. |aTally| will be retained.
 - (id) initWithTally:(NSArray *)aTally 
             modifier:(NSInteger)mod 
         targetNumber:(NSUInteger)tn;
 
 // Wrapper for -initWithTally:modifier:targetNumber: defaulting
-// modifier to 0.
+// |mod| to 0.
 - (id) initWithTally:(NSArray *)aTally
         targetNumber: (NSUInteger)tn;
 
 // Wrapper for -initWithTally:modifier:targetNumber: defaulting
-// modifier and tn to 0.
+// |mod| and |tn| to 0.
 - (id) initWithTally:(NSArray *)aTally;
 
 // The following three methods returns an autoreleased instance 
@@ -56,10 +56,10 @@
 // for details.
 + (SWRollResult *) resultWithTally:(NSArray *)aTally
                           modifier:(NSInteger)mod
-                      targetNumber: (NSUInteger)tn;
+                      targetNumber:(NSUInteger)tn;
 
 + (SWRollResult *) resultWithTally:(NSArray *)aTally
-                      targetNumber: (NSUInteger)tn;
+                      targetNumber:(NSUInteger)tn;
 
 + (SWRollResult *) resultWithTally:(NSArray *)aTally;
 

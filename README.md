@@ -24,7 +24,7 @@ Example of usage:
 
     result = [custom roll];
 
-    NSLog(@"The %@ die roll was: %d", [custom dieString], result.total);
+    NSLog(@"The %@ die roll was: %d", [custom asString], result.total);
     NSLog(@"Roll tally: %@", [result.tally tallyAsString]);
 
 Read the license before using! Thanks.

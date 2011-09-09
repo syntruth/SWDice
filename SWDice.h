@@ -41,14 +41,16 @@ typedef enum {
 @property (readonly) NSUInteger staticModifier;
 
 // Designated initializer.
-// All params are NSInteger or NSUInteger, though n and s must
+// All params are NSInteger or NSUInteger, though |num| and |sides| must
 // next be unsigned!
-- (id) initWithNumber:(NSUInteger)n sides:(NSUInteger)s mod:(NSInteger)m;
+- (id) initWithNumber:(NSUInteger)num 
+                sides:(NSUInteger)sides
+                  mod:(NSInteger)mod;
 
-// Calls the designated initializer with mod set to 0.
-- (id) initWithNumber:(NSUInteger)n sides:(NSUInteger)s;
+// Calls the designated initializer with |mod| set to 0.
+- (id) initWithNumber:(NSUInteger)num sides:(NSUInteger)sides;
 
-// Calls the designated initalize with a number and mod set to 0.
+// Calls the designated initalize with a |num| and |mod| set to 0.
 - (id) initWithSides:(NSUInteger)s;
 
 // NSObject init override; calls -initWithNumber:sides:mod: with
@@ -73,11 +75,13 @@ typedef enum {
 
 // The following three class methods return autoreleased instances of
 // a SWDice object. See -initWithNumber:sides:mod: for param details.
-+ (SWDice *) withSides:(NSUInteger)s;
++ (SWDice *) withNumber:(NSUInteger)num 
+                  sides:(NSUInteger)sides
+                    mod:(NSUInteger)mod;
 
-+ (SWDice *) withNumber:(NSUInteger)n sides:(NSUInteger)s;
++ (SWDice *) withNumber:(NSUInteger)num sides:(NSUInteger)sides;
 
-+ (SWDice *) withNumber:(NSUInteger)n sides:(NSUInteger)s mod:(NSUInteger)m;
++ (SWDice *) withSides:(NSUInteger)sides;
 
 // "Rolls" the SWDice object, creating a NSMutableArray tally object
 // to track the results of each die roll. It then returns an 
@@ -86,16 +90,16 @@ typedef enum {
 - (SWRollResult *) rollWithModifier:(NSInteger)mod
                 againstTargetNumber:(NSUInteger)targetNumber;
 
-// Calls -rollWithModifier:againstTargetNumber: with targetNumber
+// Calls -rollWithModifier:againstTargetNumber: with |targetNumber|
 // set to the Savage Worlds default of 4.
 - (SWRollResult *) rollWithModifier:(NSInteger)mod;
 
-// Calls -rollWithModifier:againstTargetNumber: with mod set to
+// Calls -rollWithModifier:againstTargetNumber: with |mod| set to
 // a default of 0.
 - (SWRollResult *) rollAgainstTargetNumber:(NSUInteger)targetNumber;
 
-// Calls -rollWithModifier:againstTargetNumber: with mod set to
-// a default of 0 and targetNumber to the default of 4.
+// Calls -rollWithModifier:againstTargetNumber: with |mod| set to
+// a default of 0 and |targetNumber| to the default of 4.
 - (SWRollResult *) roll;
 
 // Returns a string that represents a custom SWDice object, in the standard
@@ -103,6 +107,6 @@ typedef enum {
 // dice with a modifier of -2 would return "3d4-2".
 // It is because of this method that number and sides must NEVER be unsigned
 // integer values, or else you will not get a correct string.
-- (NSString *) dieString;
+- (NSString *) asString;
 
 @end
