@@ -141,7 +141,7 @@ static NSDictionary *allDice;
   if ([dieString compare: @"UNTRAINED"
                  options:NSCaseInsensitiveSearch] == NSOrderedSame)
   {
-    die = D4;
+    die = UNTRAINED;
   }
 
   if ([dieString compare: @"UNTRAINED_WILD_DIE"
@@ -215,7 +215,7 @@ static NSDictionary *allDice;
   // Sort the tally from lowest to highest...
   [tally sortUsingComparator:^(id num1, id num2) {
     return [num1 compare:num2];
-   }];
+  }];
 
   // ...then reverse it.
   NSArray *reversed = [[tally reverseObjectEnumerator] allObjects];            
