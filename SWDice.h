@@ -23,12 +23,6 @@
 
 #import "SWRollResult.h"
 
-// The DieType enum, for the standard Savage Worlds dice.
-typedef enum { 
-  D4, D6, D8, D10, D12, 
-  WILD_DIE, UNTRAINED, UNTRAINED_WILD_DIE 
-} DieType;
-
 // The SWDice class.
 @interface SWDice : NSObject {
   NSUInteger number;
@@ -56,22 +50,6 @@ typedef enum {
 // NSObject init override; calls -initWithNumber:sides:mod: with
 // the followind default values: 1, 6, 0, respectively.
 - (id) init;
-
-// Class method to return the string representation of a value
-// from the DieType enum, usable for output.
-+ (NSString *) getDieAsString:(DieType)die;
-
-// Class method to return a SWDice instance of a Savage Worlds die
-// based on the value of the DieType.
-+ (SWDice *) getDie:(DieType)die;
-
-// Class method that returns a SWDice instance of a Savage Worlds die
-// based on a string representation of a die; i.e.: 1d6
-// Thus, you could technically do this (but why would you?):
-//
-// SWDice *die = [SWDice getDieFromString:[SWDice getDieAsString:D6]]
-//
-+ (SWDice *) getDieFromString:(NSString *)dieString;
 
 // The following three class methods return autoreleased instances of
 // a SWDice object. See -initWithNumber:sides:mod: for param details.

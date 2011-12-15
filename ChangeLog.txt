@@ -1,3 +1,13 @@
+2011-12-15
+* Subclassed SWDie from SWDice and moved some of the singular die
+  logic into this class, such as getDie: and getDieAsString: etc.
+* Added half value methods to SWDie to handle stuff such as doing
+  Fighting/2 + 2 for the Parry derived trait.
+* Still very beta at the moment; haven't tested this and will need
+  to do so for iOS 5. I suspect that I'm gonna have to disable ARC
+  for this lib, or else convert it all to XCode 4 compliant code, 
+  removing any retain/release/autorelease clauses.
+
 2011-09-09
 * Moved the body of SWRollResult -process into the default initializer
   since it seemed silly to have a separate method for it that is only
