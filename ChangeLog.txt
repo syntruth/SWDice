@@ -1,3 +1,7 @@
+2012-1-5
+* Updated all the files to be ARC-compliant. This means that this
+  code will now only work with XCode 4+. 
+
 2011-12-15
 * Subclassed SWDie from SWDice and moved some of the singular die
   logic into this class, such as getDie: and getDieAsString: etc.
