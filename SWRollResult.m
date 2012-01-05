@@ -25,85 +25,74 @@
 
 @implementation SWRollResult
 
-@synthesize tally;
-@synthesize modifier;
-@synthesize total;
-@synthesize success;
-@synthesize raises;
-@synthesize targetNumber;
+@synthesize tally        = _tally;
+@synthesize modifier     = _modifier;
+@synthesize total        = _total;
+@synthesize success      = _success;
+@synthesize raises       = _raises;
+@synthesize targetNumber = _targetNumber;
 
-- (void) dealloc
-{
-  [tally release];
-  tally = nil;
-
-  [super dealloc];
-}
-
-- (id) initWithTally:(NSArray *)  aTally
+- (id) initWithTally:(NSArray *)  tally
             modifier:(NSInteger)  mod
         targetNumber:(NSUInteger) tn
 {
   if (self = [super init]) {
-    if (tally != nil) {
-      [tally autorelease];
+
+    _tally = tally;
+
+    _modifier     = mod;
+    _targetNumber = tn;
+
+    for (NSNumber *n in self.tally) {
+      _total += [n intValue];
     }
 
-    tally = [aTally retain];
-
-    self.modifier     = mod;
-    self.targetNumber = tn;
-
-    for (NSNumber *n in tally) {
-      self.total += [n intValue];
-    }
-
-    self.total  += self.modifier;
-    self.success = (self.total >= self.targetNumber);
-    self.raises  = (self.total - self.targetNumber) / 4;
+    _total  += self.modifier;
+    _success = (_total >= _targetNumber);
+    _raises  = (_total  - _targetNumber) / 4;
   }
 
   return self;
 }
 
-- (id) initWithTally:(NSArray *)  aTally 
+- (id) initWithTally:(NSArray *)  tally 
         targetNumber:(NSUInteger) tn
 {
-  return [self initWithTally:aTally modifier:0 targetNumber:tn];
+  return [self initWithTally:tally modifier:0 targetNumber:tn];
 }
 
-- (id) initWithTally:(NSArray *) aTally
+- (id) initWithTally:(NSArray *) tally
 {
-  return [self initWithTally:aTally modifier:0 targetNumber:4];
+  return [self initWithTally:tally modifier:0 targetNumber:4];
 }
 
-+ (SWRollResult *) resultWithTally:(NSArray *)  aTally 
++ (SWRollResult *) resultWithTally:(NSArray *)  tally 
                           modifier:(NSInteger)  mod 
                       targetNumber:(NSUInteger) tn
 {
-  return [[[SWRollResult alloc] initWithTally:aTally
-                                     modifier:mod
-                                 targetNumber:tn] autorelease];
+  return [[SWRollResult alloc] initWithTally:tally
+                                    modifier:mod
+                                targetNumber:tn];
 }
 
-+ (SWRollResult *) resultWithTally:(NSArray *)  aTally 
++ (SWRollResult *) resultWithTally:(NSArray *)  tally 
                       targetNumber:(NSUInteger) tn
 {
-  return [[[SWRollResult alloc] initWithTally:aTally 
-                                     modifier:0
-                                 targetNumber:tn] autorelease];
+  return [[SWRollResult alloc] initWithTally:tally 
+                                    modifier:0
+                                targetNumber:tn];
 }
 
-+ (SWRollResult *) resultWithTally: (NSArray *)aTally
++ (SWRollResult *) resultWithTally:(NSArray *) tally
 {
-  return [[[SWRollResult alloc] initWithTally:aTally
-                                     modifier:0
-                                 targetNumber:0] autorelease];
+  return [[SWRollResult alloc] initWithTally:tally
+                                    modifier:0
+                                targetNumber:0];
 }
 
 - (NSString *) tallyAsString
 {
-  return [tally componentsJoinedByString:@", "]
+  return [self.tally componentsJoinedByString:@", "]
 }
 
 @end

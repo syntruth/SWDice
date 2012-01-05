@@ -21,47 +21,40 @@
 //
 // 3. This notice may not be removed or altered from any source distribution.
 
-@interface SWRollResult : NSObject {
-  NSArray    *tally;
-  NSInteger   modifier;
-  NSInteger   total;
-  bool        success;
-  NSUInteger  raises;
-  NSUInteger  targetNumber;
-}
+@interface SWRollResult : NSObject
 
-@property (readonly, retain) NSArray *tally;
-@property NSInteger  modifier;
-@property NSInteger  total;
-@property bool       success;
-@property NSUInteger raises;
-@property NSUInteger targetNumber;
+@property (nonatomic, readonly)  NSArray *tally;
+@property (nonatomic) NSInteger  modifier;
+@property (nonatomic) NSInteger  total;
+@property (nonatomic) bool       success;
+@property (nonatomic) NSUInteger raises;
+@property (nonatomic) NSUInteger targetNumber;
 
 // Designated initializer. |aTally| will be retained.
-- (id) initWithTally:(NSArray *)aTally 
+- (id) initWithTally:(NSArray *)tally 
             modifier:(NSInteger)mod 
         targetNumber:(NSUInteger)tn;
 
 // Wrapper for -initWithTally:modifier:targetNumber: defaulting
 // |mod| to 0.
-- (id) initWithTally:(NSArray *)aTally
+- (id) initWithTally:(NSArray *)tally
         targetNumber: (NSUInteger)tn;
 
 // Wrapper for -initWithTally:modifier:targetNumber: defaulting
 // |mod| and |tn| to 0.
-- (id) initWithTally:(NSArray *)aTally;
+- (id) initWithTally:(NSArray *)tally;
 
 // The following three methods returns an autoreleased instance 
 // of SWRollResult. See -initWithTally:modifier:targetNumber: 
 // for details.
-+ (SWRollResult *) resultWithTally:(NSArray *)aTally
++ (SWRollResult *) resultWithTally:(NSArray *)tally
                           modifier:(NSInteger)mod
                       targetNumber:(NSUInteger)tn;
 
-+ (SWRollResult *) resultWithTally:(NSArray *)aTally
++ (SWRollResult *) resultWithTally:(NSArray *)tally
                       targetNumber:(NSUInteger)tn;
 
-+ (SWRollResult *) resultWithTally:(NSArray *)aTally;
++ (SWRollResult *) resultWithTally:(NSArray *)tally;
 
 // Returns a string of the tally, joined by commas. i.e.: 4, 3, 2
 - (NSString *) tallyAsString;

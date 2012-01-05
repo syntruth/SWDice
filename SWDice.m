@@ -26,30 +26,30 @@
 
 @implementation SWDice
 
-@synthesize number;
-@synthesize sides;
-@synthesize staticModifier;
+@synthesize number         = _number;
+@synthesize sides          = _sides;
+@synthesize staticModifier = _staticModifier;
 
-- (id) initWithNumber:(NSUInteger)num
-                sides:(NSUInteger)sides
-                  mod:(NSInteger)mod
+- (id) initWithNumber:(NSUInteger) num
+                sides:(NSUInteger) sides
+                  mod:(NSInteger)  mod
 {
   if (self = [super init]) { 
-    number         = num;
-    sides          = sides;
-    staticModifier = mod;
+    _number         = num;
+    _sides          = sides;
+    _staticModifier = mod;
   }
 
   return self;
 }
 
-- (id) initWithNumber:(NSUInteger)num
-                sides:(NSUInteger)sides
+- (id) initWithNumber:(NSUInteger) num
+                sides:(NSUInteger) sides
 {
   return [self initWithNumber:num sides:sides mod:0];
 }
 
-- (id) initWithSides:(NSUInteger)sides
+- (id) initWithSides:(NSUInteger) sides
 {
   return [self initWithNumber:1 sides:sides mod:0];
 }
@@ -59,39 +59,39 @@
   return [self initWithNumber:1 sides:6 mod:0];
 }
 
-+ (SWDice *) withNumber:(NSUInteger)num
-                  sides:(NSUInteger)sides
-                    mod:(NSUInteger)mod
++ (SWDice *) withNumber:(NSUInteger) num
+                  sides:(NSUInteger) sides
+                    mod:(NSUInteger) mod
 {
-  return [[[SWDice alloc] initWithNumber:num sides:sides mod:mod] autorelease];
+  return [[SWDice alloc] initWithNumber:num sides:sides mod:mod];
 }
 
-+ (SWDice *) withNumber:(NSUInteger)num
-                  sides:(NSUInteger)sides
++ (SWDice *) withNumber:(NSUInteger) num
+                  sides:(NSUInteger) sides
 {
-  return [[[SWDice alloc] initWithNumber:num sides:sides mod:0] autorelease];
+  return [[SWDice alloc] initWithNumber:num sides:sides mod:0];
 }
 
-+ (SWDice *) withSides:(NSUInteger)s
++ (SWDice *) withSides:(NSUInteger) sides
 {
-  return [[[SWDice alloc] initWithNumber:1 sides:sides mod:0] autorelease];
+  return [[SWDice alloc] initWithNumber:1 sides:sides mod:0];
 }
 
 - (SWRollResult *) rollWithModifier:(NSInteger)mod
                 againstTargetNumber:(NSUInteger)targetNumber
 {
-  NSMutableArray *tally = [[[NSMutableArray alloc] init] autorelease];
+  NSMutableArray *tally = [[NSMutableArray alloc] init];
   int i = 0;
-  int t = 0;
+  int n = 0;
 
   mod += self.staticModifier;
 
   while (i < self.number) {
-    t = (arc4random() % self.sides) + 1;
+    n = (arc4random() % self.sides) + 1;
 
-    if (t != self.sides) i++;
+    if (n != self.sides) i++;
 
-    [tally addObject: [NSNumber numberWithInt: t]];
+    [tally addObject: [NSNumber numberWithInt: n]];
   }
   
   // Sort the tally from lowest to highest...
@@ -102,20 +102,19 @@
   // ...then reverse it.
   NSArray *reversed = [[tally reverseObjectEnumerator] allObjects];            
 
-  // Create the SWRollResult object, calling the autoreleased
-  // creation method.
+  // Create the SWRollResult object.
   SWRollResult *result = [SWRollResult resultWithTally:reversed
                                               modifier:mod
                                           targetNumber:targetNumber];
   return result;
 }
 
-- (SWRollResult *) rollWithModifier:(NSInteger)mod
+- (SWRollResult *) rollWithModifier:(NSInteger) mod
 {
   return [self rollWithModifier:mod againstTargetNumber:4];
 }
 
-- (SWRollResult *) rollAgainstTargetNumber:(NSUInteger)targetNumber
+- (SWRollResult *) rollAgainstTargetNumber:(NSUInteger) targetNumber
 {
   return [self rollWithModifier:0 againstTargetNumber:targetNumber];
 }
@@ -127,7 +126,7 @@
 
 - (NSString *) asString
 {
-  NSMutableString *die = [[[NSMutableString alloc] init] autorelease];
+  NSMutableString *die = [[NSMutableString alloc] init];
 
   if (self.number > 1) {
     [die appendFormat:@"%d", self.number];

@@ -24,11 +24,7 @@
 #import "SWRollResult.h"
 
 // The SWDice class.
-@interface SWDice : NSObject {
-  NSUInteger number;
-  NSUInteger sides;
-  NSUInteger staticModifier;
-}
+@interface SWDice : NSObject
 
 @property (readonly) NSUInteger number;
 @property (readonly) NSUInteger sides;
