@@ -1,3 +1,6 @@
+2012-3-25
+* Fixed a small return type issue in SWDie.m
+
 2012-1-5
 * Updated all the files to be ARC-compliant. This means that this
   code will now only work with XCode 4+. 

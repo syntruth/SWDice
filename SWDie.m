@@ -63,7 +63,7 @@ static NSDictionary *allDice;
   return [allDice valueForKey:[NSString stringWithFormat:@"%d", die]];
 }
 
-+ getDieFromString:(NSString *)dieString
++ (NSString *) getDieFromString:(NSString *)dieString
 {
   // XXX -- Default to a d4; change this later?
   DieType die = D4;
